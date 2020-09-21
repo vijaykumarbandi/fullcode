@@ -1,25 +1,28 @@
-node{
-   stage('SCM Checkout'){
-     git 'https://github.com/vijaykumarbandi/fullcode.git'
-   }
-   stage('Compile'){
-      def mvnHome =  tool name: 'M2-HOME', type: 'maven'   
-      sh "${mvnHome}/bin/mvn compile"
-   }
-  stage('Package'){
-      def mvnHome =  tool name: 'M2-HOME', type: 'maven'   
-      sh "${mvnHome}/bin/mvn package"
-   }
-  stage('SonarQube Analysis'){
+pipeline {
+    agent any
+    tools {
+        maven 'M2-HOME'
+    }
+    options {
+        buildDiscarder logRotator(daysToKeepStr: '5', numToKeepStr: '7')
+    }
+    stages{
+        stage('Build'){
+            steps{
+                 sh script: 'mvn clean package'
+            }
+        }
+        
+stage('SonarQube Analysis') {
         def mvnHome =  tool name: 'M2-HOME', type: 'maven'
         withSonarQubeEnv('sonarqube') { 
           sh "${mvnHome}/bin/mvn sonar:sonar"
         }
     }
-stage('Nexusartifact uploader'){
-    def mvnHome =  tool name: 'M2-HOME', type: 'maven'
-    sh "${mvnHome}/bin/mvn nexus:nexus"
-  nexusArtifactUploader artifacts: [
+stage('Upload War To Nexus'){
+            steps{
+                script{  
+                   nexusArtifactUploader artifacts: [
                        [
                             artifactId: 'fullcode',
                             classifier: '',
@@ -34,8 +37,7 @@ stage('Nexusartifact uploader'){
                     protocol: 'http',
                     repository: 'kumar',
                     version: '1.0.0'
-}
-}
-
-
-
+              }
+            }
+        }
+    }
