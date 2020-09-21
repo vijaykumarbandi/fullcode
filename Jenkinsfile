@@ -1,23 +1,21 @@
 pipeline {
 agent any
-tools {
-maven 'M2-HOME'
-}
+def mvn = tool (maven : 'M2-HOME',type:'maven')+'/bin/bash
 stages {
 stage('compile stage') {
 steps {
-sh script: 'compile'
+  sh "${mvn} compile"
 }
 }
 stage('package stage') {
 steps {
-sh script: 'package'
+ sh "${mvn} package"
 }
 }
 stage('sonarqube analysis') {
 steps {
 withSonarQubeEnv('sonarqube') {
-sh script: 'sonar:sonar'
+ sh "${mvn} sonar:sonar"
 }
 }
 }
