@@ -1,6 +1,6 @@
 pipeline {
 agent any
-def mvn = tool (maven : 'M2-HOME',type:'maven')+'/bin/mvn
+def mvn = tool (maven : 'M2-HOME',type:'maven')+'/bin/mvn'
 stages {
 stage('compile stage') {
 steps {
