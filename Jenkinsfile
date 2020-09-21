@@ -1,5 +1,5 @@
 node {
-def mvn = tool (maven : 'M2-HOME',type: 'maven')+'/bin/mvn'
+def mvn = tool (maven : 'M2-HOME', type: 'maven') + '/bin/mvn'
 stage('compile stage') {
 sh "${mvn} compile"
 }
