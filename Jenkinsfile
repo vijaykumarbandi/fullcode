@@ -27,7 +27,7 @@ pipeline {
                        [
                             artifactId: 'fullcode',
                             classifier: '',
-                            file: "target/fullcode-1.0.0-SNAPSHOT.war",
+                            file: "target/fullcode-2.0.0-SNAPSHOT.war",
                             type: 'war'
                            ]
                        ],
@@ -37,7 +37,7 @@ pipeline {
                     nexusVersion: 'nexus3',
                     protocol: 'http',
                     repository: 'kumar',
-                    version: '1.0.0'
+                    version: '2.0.0'
               }
             }
         }
