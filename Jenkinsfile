@@ -12,11 +12,12 @@ node{
    }
   stage('SonarQube Analysis'){
         def mvnHome =  tool name: 'M2-HOME', type: 'maven'
-        withSonarQubeEnv('sonarqube'){ 
+        withSonarQubeEnv('sonarqube') { 
           sh "${mvnHome}/bin/mvn sonar:sonar"
         }
     }
 stage('Nexusartifact uploader'){
+   steps{
  script{
  nexusArtifactUploader artifacts: [
                        [
@@ -33,6 +34,7 @@ stage('Nexusartifact uploader'){
                     protocol: 'http',
                     repository: 'kumar',
                     version: '1.0.0'
+}
 }
 }
 }
