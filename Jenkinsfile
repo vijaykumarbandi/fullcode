@@ -6,9 +6,9 @@ pipeline {
     options {
         buildDiscarder logRotator(daysToKeepStr: '5', numToKeepStr: '7')
     }
-    stages{
-        stage('Build'){
-            steps{
+    stages {
+        stage('Build') {
+            steps {
                  sh script: 'mvn clean package'
             }
         }
@@ -20,9 +20,9 @@ stage('SonarQube Analytics') {
                 }
             }
         }
-stage('Upload War To Nexus'){
-            steps{
-                script{  
+stage('Upload War To Nexus') {
+            steps {
+                script {  
                    nexusArtifactUploader artifacts: [
                        [
                             artifactId: 'fullcode',
