@@ -24,22 +24,21 @@ sh script: 'sonar:sonar'
 stage('nexus artifact uploader') {
 steps {
 script {
-
 nexusArtifactUploader  artifacts: [
 [
-artifactId: '',
+artifactId: 'fullcode',
 classifier: '',
-file: "",
-type: ''
+file: "/target/fullcode-1.0.0-SNAPSHOT.war",
+type: 'war'
 ]
 ],
-credentialsId: '',
-groupId: '',
-nexusUrl: '',
-nexusVersion: '',
-repository: '',
-protocal: '',
-version: ''
+credentialsId: 'nexus',
+groupId: 'in.javahome',
+nexusUrl: '192.168.33.10:8081',
+nexusVersion: 'nexus3',
+repository: 'kumar',
+protocal: 'http',
+version: '1.0.0'
 }
 }
 }
