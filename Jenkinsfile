@@ -6,7 +6,7 @@ maven 'M2-HOME'
 stages {
 stage('compile stage') {
 steps {
-sh script: 'clean compile'
+sh script: 'compile'
 }
 }
 stage('package stage') {
