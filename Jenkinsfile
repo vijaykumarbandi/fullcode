@@ -20,6 +20,7 @@ stage('SonarQube Analysis'){
         sh "${mvnHome}/bin/mvn sonar:sonar"
         }
     }
+}
 stage('Upload War To Nexus'){
             steps{
                 script{  
