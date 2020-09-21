@@ -1,22 +1,14 @@
-pipeline {
-agent any
+agent {
 def mvn = tool (maven : 'M2-HOME',type: 'maven')+'/bin/mvn'
-stages {
 stage('compile stage') {
-steps {
-  sh "${mvn} compile"
-}
+sh "${mvn} compile"
 }
 stage('package stage') {
-steps {
- sh "${mvn} package"
-}
+sh "${mvn} package"
 }
 stage('sonarqube analysis') {
-steps {
 withSonarQubeEnv('sonarqube') {
- sh "${mvn} sonar:sonar"
-}
+sh "${mvn} sonar:sonar"
 }
 }
 stage('nexus artifact uploader') {
@@ -41,7 +33,7 @@ version: '1.0.0'
 }
 }
 }
-}
+
 
 
 
