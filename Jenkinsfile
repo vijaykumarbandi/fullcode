@@ -17,8 +17,7 @@ node{
         }
     }
 stage('Nexusartifact uploader'){
-   steps{
- script{
+script{
  nexusArtifactUploader artifacts: [
                        [
                             artifactId: 'fullcode',
@@ -37,4 +36,4 @@ stage('Nexusartifact uploader'){
 }
 }
 }
-}
+
