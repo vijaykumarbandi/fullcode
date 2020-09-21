@@ -1,27 +1,25 @@
-pipeline {
-    agent any
-    tools {
-        maven 'M2-HOME'
-    }
-    options {
-        buildDiscarder logRotator(daysToKeepStr: '5', numToKeepStr: '7')
-    }
-    stages{
-        stage('Build'){
-            steps{
-                 sh script: 'mvn clean package'
-            }
-        }
-      stage('sonar qube analysis'){
+node{
+   stage('SCM Checkout'){
+     git 'https://github.com/javahometech/my-app'
+   }
+   stage('Compile'){
+      def mvnHome =  tool name: 'M2-HOME', type: 'maven'   
+      sh "${mvnHome}/bin/mvn compile"
+   }
+  stage('Package'){
+      def mvnHome =  tool name: 'M2-HOME', type: 'maven'   
+      sh "${mvnHome}/bin/mvn package"
+   }
+  stage('SonarQube Analysis'){
         def mvnHome =  tool name: 'M2-HOME', type: 'maven'
-        withSonarQubeEnv('sonarqube') { 
-           sh "${mvnHome}/bin/mvn sonar:sonar"
+        withSonarQubeEnv('sonarqube'){ 
+          sh "${mvnHome}/bin/mvn sonar:sonar"
         }
-      }
-    stage('Upload War To Nexus'){
-            steps{
-                script{  
-                   nexusArtifactUploader artifacts: [
+    }
+
+ stage('Nexusartifact uploader'){
+ script{
+ nexusArtifactUploader artifacts: [
                        [
                             artifactId: 'fullcode',
                             classifier: '',
@@ -36,8 +34,6 @@ pipeline {
                     protocol: 'http',
                     repository: 'kumar',
                     version: '1.0.0'
-              }
-            }
-        }
-    }
+}
+}
 }
