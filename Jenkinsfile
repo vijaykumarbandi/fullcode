@@ -1,6 +1,6 @@
 node{
    stage('SCM Checkout'){
-     git 'https://github.com/javahometech/my-app'
+     git 'https://github.com/vijaykumarbandi/fullcode.git'
    }
    stage('Compile'){
       def mvnHome =  tool name: 'M2-HOME', type: 'maven'   
@@ -16,8 +16,7 @@ node{
           sh "${mvnHome}/bin/mvn sonar:sonar"
         }
     }
-
- stage('Nexusartifact uploader'){
+stage('Nexusartifact uploader'){
  script{
  nexusArtifactUploader artifacts: [
                        [
