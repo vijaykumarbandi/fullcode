@@ -13,14 +13,13 @@ pipeline {
             }
         }
         
-stage('SonarQube Analysis'){
-        def mvnHome =  tool name: 'M2-HOME', type: 'maven'
-    steps{
-        withSonarQubeEnv('sonarqube'){
-        sh "${mvnHome}/bin/mvn sonar:sonar"
+stage('SonarQube Analytics') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:2.12:sonar'
+                }
+            }
         }
-    }
-}
 stage('Upload War To Nexus'){
             steps{
                 script{  
