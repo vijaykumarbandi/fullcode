@@ -17,8 +17,9 @@ node{
         }
     }
 stage('Nexusartifact uploader'){
-script{
- nexusArtifactUploader artifacts: [
+    def mvnHome =  tool name: 'M2-HOME', type: 'maven'
+    sh "${mvnHome}/bin/mvn nexus:nexus"
+  nexusArtifactUploader artifacts: [
                        [
                             artifactId: 'fullcode',
                             classifier: '',
@@ -35,5 +36,6 @@ script{
                     version: '1.0.0'
 }
 }
-}
+
+
 
