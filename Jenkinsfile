@@ -6,21 +6,21 @@ pipeline {
     options {
         buildDiscarder logRotator(daysToKeepStr: '5', numToKeepStr: '7')
     }
-    stages {
-        stage('Build') {
-            steps {
-                 sh script: 'mvn clean package'
-            }
-        }
-        
-stage('SonarQube Analytics') {
+     stages {
+    stage('SonarQube Analytics') {
             steps {
                 withSonarQubeEnv('sonarqube') {
                     sh script:'mvn sonar:sonar'
                 }
             }
         }
-stage('Upload War To Nexus') {
+   
+        stage('Build') {
+            steps {
+                 sh script: 'mvn clean package'
+            }
+        }
+        stage('Upload War To Nexus') {
             steps {
                 script {  
                    nexusArtifactUploader artifacts: [
@@ -31,7 +31,7 @@ stage('Upload War To Nexus') {
                             type: 'war'
                            ]
                        ],
-                    credentialsId: 'nexus3',
+                    credentialsId: 'nexus',
                     groupId: 'in.javahome',
                     nexusUrl: '192.168.33.10:8081',
                     nexusVersion: 'nexus3',
