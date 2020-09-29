@@ -41,5 +41,16 @@ pipeline {
               }
             }
         }
-    }
+    stage('email notification') {
+   steps {
+       script {
+    mail bcc: '', body: '''hi 
+its successful''', cc: '', from: '', replyTo: '', subject: 'Jenkins test file', to: 'vijaykumarbandi6594@gmail.com'
+   }
+  }
+}
+     }
+}
+
+    
 }
